@@ -34,6 +34,14 @@ app.get( '/', function ( req, res) {
   })
 })
 
+process.on("SIGINT", function() {
+  log.warn("SIGINT received for process %d", process.pid);
+  // stop working on incoming requests
+  server.close(() => {
+    log.warn("Server closed");
+  });
+});
+
 process.on("SIGTERM", () => {
   log.warn("SIGTERM received for process %d", process.pid);
   // stop working on incoming requests
