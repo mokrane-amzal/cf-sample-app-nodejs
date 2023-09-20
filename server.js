@@ -6,6 +6,8 @@ var cf_svc = require( './app/vcap_services')
 // Set the minimum logging level (Levels: off, error, warn, info, verbose, debug, silly)
 log.setLoggingLevel("info");
 
+log.setCustomFields({"app_color": cf_app.get_app_color()})
+
 var app = express()
 
 // Bind to express app
