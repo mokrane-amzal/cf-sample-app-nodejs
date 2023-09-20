@@ -1,7 +1,15 @@
 var express = require( 'express')
-var app = express()
+var log = require('cf-nodejs-logging-support');
 var cf_app = require( './app/vcap_application')
 var cf_svc = require( './app/vcap_services')
+
+// Set the minimum logging level (Levels: off, error, warn, info, verbose, debug, silly)
+log.setLoggingLevel("info");
+
+var app = express()
+
+// Bind to express app
+app.use(log.logNetwork);
 
 app.set( 'views', __dirname + '/views')
 app.set( 'view engine', 'jade')
@@ -23,4 +31,8 @@ app.get( '/', function ( req, res) {
   })
 })
 
-app.listen(process.env.PORT || 4000)
+const port = process.env.PORT || 4000
+app.listen(port)
+
+// Formatted log message
+log.info("Server is listening on port %d", port);

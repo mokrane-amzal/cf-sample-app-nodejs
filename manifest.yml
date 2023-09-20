@@ -4,5 +4,7 @@ applications:
   memory: 192M
   instances: 1
   random-route: false
+  services:
+    - orca-loki-main
   env:
     APP_COLOR: blue
