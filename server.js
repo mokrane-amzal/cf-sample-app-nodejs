@@ -1,5 +1,6 @@
+var http = require( 'http')
 var express = require( 'express')
-var log = require('cf-nodejs-logging-support');
+var log = require('cf-nodejs-logging-support')
 var cf_app = require( './app/vcap_application')
 var cf_svc = require( './app/vcap_services')
 
@@ -33,8 +34,19 @@ app.get( '/', function ( req, res) {
   })
 })
 
-const port = process.env.PORT || 4000
-app.listen(port)
+process.on("SIGTERM", () => {
+  log.warn("SIGTERM received for process %d", process.pid);
+  // stop working on incoming requests
+  server.close(() => {
+    log.warn("Server closed");
+  });
+});
 
-// Formatted log message
-log.info("Server is listening on port %d", port);
+const port = process.env.PORT || 4000
+// app.listen(port)
+
+const server = new http.Server(app)
+server.timeout = 30 * 1000
+server.listen(port, function () {
+  log.info("Server is listening on port %d", port);
+})
