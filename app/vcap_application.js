@@ -40,5 +40,12 @@ module.exports = {
       var app_info = JSON.parse( process.env.VCAP_APPLICATION)
       return app_info.limits.disk
     }
+  },
+
+  get_app_color: function() {
+    if (process.env.APP_COLOR) {
+      var color = process.env.APP_COLOR
+      return color
+    }
   }
 }

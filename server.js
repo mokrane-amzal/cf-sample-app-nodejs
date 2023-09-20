@@ -13,6 +13,7 @@ app.get( '/', function ( req, res) {
     application_name:   cf_app.get_app_name(),
     app_uris:           cf_app.get_app_uris(),
     app_space_name:     cf_app.get_app_space(),
+    app_color:          cf_app.get_app_color(),
     app_index:          cf_app.get_app_index(),
     app_mem_limits:     cf_app.get_app_mem_limits(),
     app_disk_limits:    cf_app.get_app_disk_limits(),

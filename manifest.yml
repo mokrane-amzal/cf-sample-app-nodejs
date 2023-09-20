@@ -1,6 +1,8 @@
 ---
 applications:
-- name: cf-nodejs
+- name: cf-nodejs-i050650
   memory: 192M
   instances: 1
   random-route: false
+  env:
+    APP_COLOR: blue
