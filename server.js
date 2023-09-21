@@ -34,27 +34,27 @@ app.get( '/', function ( req, res) {
   })
 })
 
-process.on("SIGINT", function() {
-  log.warn("SIGINT received for process %d", process.pid);
-  // stop working on incoming requests
-  server.close(() => {
-    log.warn("Server closed");
-  });
-});
+var intervalId;
 
 process.on("SIGTERM", () => {
   log.warn("SIGTERM received for process %d", process.pid);
   // stop working on incoming requests
   server.close(() => {
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
     log.warn("Server closed");
   });
 });
 
 const port = process.env.PORT || 4000
-// app.listen(port)
 
 const server = new http.Server(app)
 server.timeout = 30 * 1000
 server.listen(port, function () {
   log.info("Server is listening on port %d", port);
+  // Log a message every 5 seconds.
+  intervalId = setInterval(() => {
+  log.info("heartbeat");
+  }, 5 * 1000);
 })
