@@ -1,6 +1,7 @@
 ---
 applications:
 - name: cf-nodejs-i050650
+  command: node ./server.js
   memory: 192M
   instances: 1
   random-route: false
